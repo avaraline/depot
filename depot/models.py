@@ -80,6 +80,9 @@ class Collection (models.Model):
             'name': self.name,
             'tag': self.ostype,
             'uri': self.api_url(),
+            'download_uri': reverse('api-v1-resource', kwargs={
+                'slug': self.slug,
+            }),
             **extra
         }
 
@@ -111,7 +114,7 @@ class Resource (models.Model):
         return self.name or str(self.num)
 
     def api_url(self):
-        return reverse('api-v1-resource', kwargs={
+        return reverse('api-v1-resource-num', kwargs={
             'slug': self.collection.slug,
             'tag': self.ostype,
             'num': self.num,

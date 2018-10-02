@@ -77,12 +77,14 @@ class LevelAPI (APIView):
 
 class ResourceAPI (APIView):
 
-    def get(self, request, slug, tag, num, alt=None):
+    def get(self, request, slug, tag=None, num=None, alt=None):
+        collection = Collection.objects.find(slug)
+        if tag is None and num is None:
+            return FileResponse(collection.original, as_attachment=True)
         if not tag.isdigit():
             if len(tag) != 4:
                 raise Exception('Invalid resource tag.')
             tag = OSType(tag)
-        collection = Collection.objects.find(slug)
         params = {'num': num} if num.isdigit() else {'name': num}
         resource = collection.resources.get(tag=tag, **params)
         if alt:
