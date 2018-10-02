@@ -1,0 +1,3 @@
+[submodule "vendor/avara-level-converter"]
+	path = vendor/avara-level-converter
+	url = https://github.com/avaraline/avara-level-converter
